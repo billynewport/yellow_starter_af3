@@ -1,0 +1,41 @@
+[
+    {
+      "dsgName": "LiveDSG",
+      "workspace": "Consumer1",
+      "assignments": [
+        {
+          "dataPlatform": "SCD1",
+          "documentation": "Live Yellow DataPlatform",
+          "productionStatus": "PRODUCTION",
+          "deprecationsAllowed": "NEVER",
+          "status": "PROVISIONED"
+        }
+      ]
+    },
+    {
+      "dsgName": "ForensicDSG",
+      "workspace": "Consumer1",
+      "assignments": [
+        {
+          "dataPlatform": "SCD2",
+          "documentation": "Forensic Yellow DataPlatform",
+          "productionStatus": "PRODUCTION",
+          "deprecationsAllowed": "NEVER",
+          "status": "PROVISIONED"
+        }
+      ]
+    },
+    {
+      "dsgName": "DSG",
+      "workspace": "Datasurface_ModelExternalization",
+      "assignments": [
+        {
+          "dataPlatform": "SCD2",
+          "documentation": "Forensic Yellow DataPlatform",
+          "productionStatus": "PRODUCTION",
+          "deprecationsAllowed": "NEVER",
+          "status": "PROVISIONED"
+        }
+      ]
+    }
+  ]
