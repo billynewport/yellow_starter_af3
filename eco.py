@@ -19,8 +19,8 @@ from rte_prod import createProdRTE
 from rte_uat import createUATRTE
 
 GH_REPO_OWNER: str = "billynewport"  # Change to your github username
-GH_REPO_NAME: str = "yellow_starter"  # Change to your github repository name containing this project
-GH_DT_REPO_NAME: str = "yellow_starter"  # For now, we use the same repo for the transformer
+GH_REPO_NAME: str = "yellow_starter_af3"  # Change to your github repository name containing this project
+GH_DT_REPO_NAME: str = "yellow_starter_af3"  # For now, we use the same repo for the transformer
 
 
 def createEcosystem() -> Ecosystem:
