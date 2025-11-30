@@ -47,6 +47,7 @@ def createPSP() -> YellowPlatformServiceProvider:
     yp_assembly: YellowExternalAirflow3AndMergeDatabase = YellowExternalAirflow3AndMergeDatabase(
         name="Test_DP",
         namespace=KUB_NAME_SPACE,
+        roMergeCRGCredential=Credential("postgres", CredentialType.USER_PASSWORD),
         git_cache_config=git_config,
         afHostPortPair=HostPortPair(POSTGRES_HOST, 5432),
         airflowServiceAccount=AIRFLOW_SERVICE_ACCOUNT
