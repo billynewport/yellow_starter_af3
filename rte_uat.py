@@ -14,8 +14,10 @@ from datasurface.md.containers import HostPortPair
 from datasurface.md.credential import Credential, CredentialType
 from datasurface.md.documentation import PlainTextDocumentation
 from datasurface.md import StorageRequirement, ProductionStatus
-from datasurface.platforms.yellow import YellowDataPlatform, YellowMilestoneStrategy, YellowPlatformServiceProvider, K8sResourceLimits
-from datasurface.md import PostgresDatabase, ConsumerReplicaGroup, CronTrigger, RuntimeEnvironment, Ecosystem, PSPDeclaration
+from datasurface.platforms.yellow import YellowDataPlatform, YellowPlatformServiceProvider, K8sResourceLimits
+from datasurface.md.governance import DataMilestoningStrategy
+from datasurface.md.triggers import CronTrigger
+from datasurface.md import PostgresDatabase, ConsumerReplicaGroup, RuntimeEnvironment, Ecosystem, PSPDeclaration
 from datasurface.platforms.yellow.assembly import GitCacheConfig, YellowExternalAirflow3AndMergeDatabase
 from datasurface.md.containers import SQLServerDatabase
 from datasurface.platforms.yellow.yellow_dp import K8sDataTransformerHint
@@ -68,12 +70,12 @@ def createPSP() -> YellowPlatformServiceProvider:
             YellowDataPlatform(
                 name="SCD1_UAT",
                 doc=PlainTextDocumentation("SCD1 Yellow DataPlatform UAT"),
-                milestoneStrategy=YellowMilestoneStrategy.SCD1
+                milestoneStrategy=DataMilestoningStrategy.SCD1
                 ),
             YellowDataPlatform(
                 "SCD2_UAT",
                 doc=PlainTextDocumentation("SCD2 Yellow DataPlatform UAT"),
-                milestoneStrategy=YellowMilestoneStrategy.SCD2
+                milestoneStrategy=DataMilestoningStrategy.SCD2
                 )
         ],
         consumerReplicaGroups=[

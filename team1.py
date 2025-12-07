@@ -8,11 +8,12 @@ It will generate 2 pipelines, one with live records only and the other with full
 
 from datasurface.md import (
     Team, GovernanceZone, DataTransformer, Ecosystem, LocationKey, Credential,
-    PlainTextDocumentation, WorkspacePlatformConfig, Datastore, Dataset, CronTrigger,
+    PlainTextDocumentation, WorkspacePlatformConfig, Datastore, Dataset,
     IngestionConsistencyType, ConsumerRetentionRequirements, DataMilestoningStrategy, DataLatency, DDLTable, DDLColumn, NullableStatus,
     PrimaryKeyStatus, VarChar, Date, Workspace, DatasetSink, DatasetGroup, PostgresDatabase, TeamDeclaration,
     EnvironmentMap, EnvRefDataContainer, ProductionStatus, DataPlatformManagedDataContainer
 )
+from datasurface.md.triggers import CronTrigger
 from datasurface.md.containers import (
     SQLSnapshotIngestion, HostPortPair
 )
@@ -121,7 +122,7 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
                 ],
                 platform_chooser=WorkspacePlatformConfig(
                     hist=ConsumerRetentionRequirements(
-                        r=DataMilestoningStrategy.LIVE_ONLY,
+                        r=DataMilestoningStrategy.SCD1,
                         latency=DataLatency.MINUTES,
                         regulator=None
                     )
@@ -136,7 +137,7 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
                 ],
                 platform_chooser=WorkspacePlatformConfig(
                     hist=ConsumerRetentionRequirements(
-                        r=DataMilestoningStrategy.FORENSIC,
+                        r=DataMilestoningStrategy.SCD2,
                         latency=DataLatency.MINUTES,
                         regulator=None
                     )
