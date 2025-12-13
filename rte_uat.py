@@ -26,7 +26,7 @@ from datasurface.md.repo import VersionPatternReleaseSelector, GitHubRepository,
 # UAT environment configuration - separate namespace and databases from prod
 UAT_KUB_NAME_SPACE: str = "yp-airflow3-uat"
 UAT_AIRFLOW_SERVICE_ACCOUNT: str = "airflow-worker"
-POSTGRES_HOST: str = "postgres"
+POSTGRES_HOST: str = "postgres-co"
 UAT_MERGE_DB_NAME: str = "merge_db_af3_uat"
 UAT_CQRS_DB_NAME: str = "postgres-cqrs-af3-uat"
 

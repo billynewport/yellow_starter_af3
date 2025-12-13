@@ -26,7 +26,7 @@ from datasurface.md.repo import VersionPatternReleaseSelector, GitHubRepository,
 # Production environment configuration - matches kub-test Airflow 3.x setup
 KUB_NAME_SPACE: str = "yp-airflow3"
 AIRFLOW_SERVICE_ACCOUNT: str = "airflow-worker"
-POSTGRES_HOST: str = "postgres"
+POSTGRES_HOST: str = "postgres-co"
 MERGE_DB_NAME: str = "merge_db_af3"
 CQRS_DB_NAME: str = "postgres-cqrs-af3"
 
