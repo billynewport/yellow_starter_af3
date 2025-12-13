@@ -99,7 +99,7 @@ def createPSP() -> YellowPlatformServiceProvider:
                 dataContainers={
                     SQLServerDatabase(
                         "SQLServer",
-                        hostPort=HostPortPair("sqlserver", 1433),
+                        hostPort=HostPortPair("sqlserver-co", 1433),
                         locations={LocationKey("MyCorp:USA/NY_1")},
                         productionStatus=ProductionStatus.PRODUCTION,
                         databaseName="cqrs"
