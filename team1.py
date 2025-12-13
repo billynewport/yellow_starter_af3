@@ -42,7 +42,7 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
         dataContainers={
             frozenset(["customer_db"]): PostgresDatabase(
                     "CustomerDB",  # Model name for database
-                    hostPort=HostPortPair("postgres", 5432),
+                    hostPort=HostPortPair("postgres-co", 5432),
                     locations={LocationKey("MyCorp:USA/NY_1")},  # Locations for database
                     productionStatus=ProductionStatus.PRODUCTION,
                     databaseName="customer_db"  # Database name
@@ -57,7 +57,7 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
         dataContainers={
             frozenset(["customer_db"]): PostgresDatabase(
                     "CustomerDB",  # Model name for database
-                    hostPort=HostPortPair("postgres", 5432),  # Sharing database in demo, would normally be a different database
+                    hostPort=HostPortPair("postgres-co", 5432),  # Sharing database in demo, would normally be a different database
                     locations={LocationKey("MyCorp:USA/NY_1")},  # Locations for database
                     productionStatus=ProductionStatus.NOT_PRODUCTION,
                     databaseName="customer_db-uat"  # Database name
