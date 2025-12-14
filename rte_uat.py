@@ -64,7 +64,7 @@ def createPSP() -> YellowPlatformServiceProvider:
         mergeRW_Credential=Credential("postgres", CredentialType.USER_PASSWORD),
         yp_assembly=yp_assembly,
         merge_datacontainer=k8s_merge_datacontainer,
-        datasurfaceDockerImage="datasurface/datasurface:v0.4.10",
+        datasurfaceDockerImage="datasurface/datasurface:v0.4.11",
         pv_storage_class="longhorn",
         dataPlatforms=[
             YellowDataPlatform(
