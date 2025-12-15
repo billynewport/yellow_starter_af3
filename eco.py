@@ -28,7 +28,7 @@ def createEcosystem() -> Ecosystem:
     It is used to test the YellowDataPlatform. We are using a monorepo approach
     so all the model fragments use the same owning repository.
     
-    This ecosystem demonstrates branch-based access control for different teams.
+    Updated ecosystem documentation for testing workflow.
     """
 
     git: Credential = Credential("git", CredentialType.API_TOKEN)
@@ -46,7 +46,7 @@ def createEcosystem() -> Ecosystem:
             InfrastructureVendor(
                 name="MyCorp",
                 cloud_vendor=CloudVendor.PRIVATE,
-                documentation=PlainTextDocumentation("Private company data centers"),
+                documentation=PlainTextDocumentation("ZZZ"),
                 locations=[
                     InfrastructureLocation(
                         name="USA",
