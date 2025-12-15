@@ -46,7 +46,7 @@ def createEcosystem() -> Ecosystem:
             InfrastructureVendor(
                 name="MyCorp",
                 cloud_vendor=CloudVendor.PRIVATE,
-                documentation=PlainTextDocumentation("Private company data centers"),
+                documentation=PlainTextDocumentation("YYY"),
                 locations=[
                     InfrastructureLocation(
                         name="USA",
