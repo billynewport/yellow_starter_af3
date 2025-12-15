@@ -5,7 +5,8 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  check:
+  datasurface-pr-validator:
+    name: DataSurface PR Validator
     runs-on: ubuntu-latest
 
     steps:
