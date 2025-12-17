@@ -13,12 +13,12 @@ from datasurface.md.repo import GitHubRepository
 from team1 import createTeam
 
 GH_REPO_OWNER: str = "billynewport"  # Change to your github username
-GH_REPO_NAME: str = "yellow_starter"  # Change to your github repository name containing this project
-GH_DT_REPO_NAME: str = "yellow_starter"  # For now, we use the same repo for the transformer
+GH_REPO_NAME: str = "yellow_starter_af3"  # Change to your github repository name containing this project
+GH_DT_REPO_NAME: str = "yellow_starter_af3"  # For now, we use the same repo for the transformer
 
 
 def createGZ(ecosys: Ecosystem, git: Credential) -> GovernanceZone:
-    ecosys.add(GovernanceZoneDeclaration("USA", GitHubRepository(f"{GH_REPO_OWNER}/{GH_REPO_NAME}", "gzmain")))
+    ecosys.add(GovernanceZoneDeclaration("USA", GitHubRepository(f"{GH_REPO_OWNER}/{GH_REPO_NAME}", "gzUSA_edit")))
     gz: GovernanceZone = ecosys.getZoneOrThrow("USA")
 
     # Add a team to the governance zone
