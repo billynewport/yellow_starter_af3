@@ -66,7 +66,7 @@ def createPSP() -> YellowPlatformServiceProvider:
         yp_assembly=yp_assembly,
         merge_datacontainer=k8s_merge_datacontainer,
         pv_storage_class="longhorn",
-        datasurfaceDockerImage="datasurface/datasurface:v0.4.11",
+        datasurfaceDockerImage="datasurface/datasurface:v0.5.2",
         dataPlatforms=[
             YellowDataPlatform(
                 name="SCD1",
