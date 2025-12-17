@@ -22,6 +22,7 @@ from datasurface.platforms.yellow.assembly import GitCacheConfig, YellowExternal
 from datasurface.md.containers import SQLServerDatabase
 from datasurface.platforms.yellow.yellow_dp import K8sDataTransformerHint
 from datasurface.md.repo import VersionPatternReleaseSelector, GitHubRepository, ReleaseType, VersionPatterns
+from datasurface.platforms.yellow.yellow_kafka_publisher import KafkaEventPublishConfig
 
 # Production environment configuration - matches kub-test Airflow 3.x setup
 KUB_NAME_SPACE: str = "yp-airflow3"
@@ -108,8 +109,13 @@ def createPSP() -> YellowPlatformServiceProvider:
                 workspaceNames={"Consumer1", "MaskedStoreGenerator"},
                 trigger=CronTrigger("Every 5 minute", "*/5 * * * *"),
                 credential=Credential("sa", CredentialType.USER_PASSWORD)
-            )
+            ),
         ],
+        eventPublishConfig=KafkaEventPublishConfig(
+            topicPrefix="datasurface.yellow_starter_af3.prod",
+            bootstrapServers="kafka-co:9092",
+            credential=Credential("datasurface_kafka_prod_publisher", CredentialType.USER_PASSWORD)
+        ),
         hints=[
             # Run the MaskedCustomer data transformer on the SQLServer consumer replica group
             K8sDataTransformerHint(
