@@ -112,9 +112,9 @@ def createPSP() -> YellowPlatformServiceProvider:
             ),
         ],
         eventPublishConfig=KafkaEventPublishConfig(
-            topicPrefix="datasurface.yellow_starter_af3.prod",
-            bootstrapServers="kafka-co:9092",
-            credential=Credential("datasurface_kafka_prod_publisher", CredentialType.USER_PASSWORD)
+            topicPrefix="datasurface_prod",
+            bootstrapServers="co-redpanda:9092",
+            credential=Credential("datasurface-kafka-prod-publisher", CredentialType.USER_PASSWORD)
         ),
         hints=[
             # Run the MaskedCustomer data transformer on the SQLServer consumer replica group
