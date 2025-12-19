@@ -106,7 +106,7 @@ def createPSP() -> YellowPlatformServiceProvider:
                         databaseName="cqrs"
                     )
                 },
-                workspaceNames={"Consumer1", "MaskedStoreGenerator"},
+                workspaceNames={"Consumer1", "MaskedStoreGenerator", "DBT_MaskedStoreGenerator"},
                 trigger=CronTrigger("Every 5 minute", "*/5 * * * *"),
                 credential=Credential("sa", CredentialType.USER_PASSWORD)
             ),
@@ -120,6 +120,21 @@ def createPSP() -> YellowPlatformServiceProvider:
             # Run the MaskedCustomer data transformer on the SQLServer consumer replica group
             K8sDataTransformerHint(
                 workspaceName="MaskedStoreGenerator",
+                kv={},
+                resourceLimits=K8sResourceLimits(
+                    requested_memory=StorageRequirement("1G"),
+                    limits_memory=StorageRequirement("2G"),
+                    requested_cpu=1.0,
+                    limits_cpu=2.0
+                ),
+                executionPlacement=DataTransformerExecutionPlacement(
+                    crgName="SQLServer",
+                    dcName="SQLServer"
+                )
+            ),
+            # Run the MaskedCustomer data transformer on the SQLServer consumer replica group
+            K8sDataTransformerHint(
+                workspaceName="DBT_MaskedStoreGenerator",
                 kv={},
                 resourceLimits=K8sResourceLimits(
                     requested_memory=StorageRequirement("1G"),
