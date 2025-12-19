@@ -1,6 +1,6 @@
 """
-// Copyright (c) William Newport
-// SPDX-License-Identifier: BUSL-1.1
+Copyright (c) 2025 DataSurface Inc. All Rights Reserved.
+Proprietary Software - See LICENSE.txt for terms.
 
 This is a starter datasurface repository. It defines a simple Ecosystem using YellowDataPlatform with Live and Forensic modes.
 It will generate 2 pipelines, one with live records only and the other with full milestoning.
@@ -119,7 +119,6 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
                     DatasetSink("Store1", "customers"),
                     DatasetSink("Store1", "addresses"),
                     DatasetSink("MaskedCustomers", "customers"),
-                    DatasetSink("DBTMaskedCustomers", "customers")
                 ],
                 platform_chooser=WorkspacePlatformConfig(
                     hist=ConsumerRetentionRequirements(
@@ -135,7 +134,6 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
                     DatasetSink("Store1", "customers"),
                     DatasetSink("Store1", "addresses"),
                     DatasetSink("MaskedCustomers", "customers"),
-                    DatasetSink("DBTMaskedCustomers", "customers")
                 ],
                 platform_chooser=WorkspacePlatformConfig(
                     hist=ConsumerRetentionRequirements(
@@ -166,47 +164,6 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
                 store=Datastore(
                     name="MaskedCustomers",
                     documentation=PlainTextDocumentation("MaskedCustomers datastore"),
-                    datasets=[
-                        Dataset(
-                            "customers",
-                            schema=DDLTable(
-                                columns=[
-                                    DDLColumn("id", VarChar(20), nullable=NullableStatus.NOT_NULLABLE, primary_key=PrimaryKeyStatus.PK),
-                                    DDLColumn("firstname", VarChar(100), nullable=NullableStatus.NOT_NULLABLE),
-                                    DDLColumn("lastname", VarChar(100), nullable=NullableStatus.NOT_NULLABLE),
-                                    DDLColumn("dob", Date(), nullable=NullableStatus.NOT_NULLABLE),
-                                    DDLColumn("email", VarChar(100)),
-                                    DDLColumn("phone", VarChar(100)),
-                                    DDLColumn("primaryaddressid", VarChar(20)),
-                                    DDLColumn("billingaddressid", VarChar(20))
-                                ]
-                            ),
-                            classifications=[SimpleDC(SimpleDCTypes.PUB, "Customer")]
-                        )
-                    ]
-                )
-            )
-        ),
-        Workspace(
-            "DBT_MaskedStoreGenerator",
-            DataPlatformManagedDataContainer("MaskedStoreGenerator with DBT container"),
-            DatasetGroup(
-                "Original",
-                sinks=[DatasetSink("Store1", "customers")]
-            ),
-            DataTransformer(
-                name="DBTMaskedCustomerGenerator",
-                code=PythonRepoCodeArtifact(
-                    VersionedRepository(
-                        GitHubRepository("datasurface/yellow_starter_dbt_maskcustomer", "main", credential=git),
-                        EnvRefReleaseSelector("custMaskRev")
-                    )
-                ),
-                runAsCredential=Credential("mask_dt_cred", CredentialType.USER_PASSWORD),
-                trigger=CronTrigger("Every 1 minute", "*/1 * * * *"),
-                store=Datastore(
-                    name="DBTMaskedCustomers",
-                    documentation=PlainTextDocumentation("MaskedCustomers with DBT datastore"),
                     datasets=[
                         Dataset(
                             "customers",

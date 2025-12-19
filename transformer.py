@@ -1,3 +1,6 @@
+# Copyright (c) 2025 DataSurface Inc. All Rights Reserved.
+# Proprietary Software - See LICENSE.txt for terms.
+
 from typing import List
 
 from sqlalchemy import Connection, text

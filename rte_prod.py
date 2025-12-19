@@ -1,6 +1,6 @@
 """
-// Copyright (c) William Newport
-// SPDX-License-Identifier: BUSL-1.1
+Copyright (c) 2025 DataSurface Inc. All Rights Reserved.
+Proprietary Software - See LICENSE.txt for terms.
 
 This is a starter datasurface repository. It defines a simple Ecosystem using YellowDataPlatform with Live and Forensic modes. It
 ingests data from a single source, using a Workspace to produce a masked version of that data and provides consumer Workspaces
@@ -106,7 +106,7 @@ def createPSP() -> YellowPlatformServiceProvider:
                         databaseName="cqrs"
                     )
                 },
-                workspaceNames={"Consumer1", "MaskedStoreGenerator", "DBT_MaskedStoreGenerator"},
+                workspaceNames={"Consumer1", "MaskedStoreGenerator"},
                 trigger=CronTrigger("Every 5 minute", "*/5 * * * *"),
                 credential=Credential("sa", CredentialType.USER_PASSWORD)
             ),
@@ -120,21 +120,6 @@ def createPSP() -> YellowPlatformServiceProvider:
             # Run the MaskedCustomer data transformer on the SQLServer consumer replica group
             K8sDataTransformerHint(
                 workspaceName="MaskedStoreGenerator",
-                kv={},
-                resourceLimits=K8sResourceLimits(
-                    requested_memory=StorageRequirement("1G"),
-                    limits_memory=StorageRequirement("2G"),
-                    requested_cpu=1.0,
-                    limits_cpu=2.0
-                ),
-                executionPlacement=DataTransformerExecutionPlacement(
-                    crgName="SQLServer",
-                    dcName="SQLServer"
-                )
-            ),
-            # Run the MaskedCustomer data transformer on the SQLServer consumer replica group
-            K8sDataTransformerHint(
-                workspaceName="DBT_MaskedStoreGenerator",
                 kv={},
                 resourceLimits=K8sResourceLimits(
                     requested_memory=StorageRequirement("1G"),
