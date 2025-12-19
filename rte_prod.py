@@ -1,6 +1,6 @@
 """
-// Copyright (c) William Newport
-// SPDX-License-Identifier: BUSL-1.1
+Copyright (c) 2025 DataSurface Inc. All Rights Reserved.
+Proprietary Software - See LICENSE.txt for terms.
 
 This is a starter datasurface repository. It defines a simple Ecosystem using YellowDataPlatform with Live and Forensic modes. It
 ingests data from a single source, using a Workspace to produce a masked version of that data and provides consumer Workspaces
@@ -66,7 +66,7 @@ def createPSP() -> YellowPlatformServiceProvider:
         yp_assembly=yp_assembly,
         merge_datacontainer=k8s_merge_datacontainer,
         pv_storage_class="longhorn",
-        datasurfaceDockerImage="datasurface/datasurface:v0.5.6",
+        datasurfaceDockerImage="datasurface/datasurface:v0.5.13",
         dataPlatforms=[
             YellowDataPlatform(
                 name="SCD1",

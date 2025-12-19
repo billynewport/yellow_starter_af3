@@ -1,3 +1,6 @@
+# Copyright (c) 2025 DataSurface Inc. All Rights Reserved.
+# Proprietary Software - See LICENSE.txt for terms.
+
 import unittest
 from datasurface.md import Ecosystem, ValidationTree, DataPlatform, EcosystemPipelineGraph, PlatformPipelineGraph
 from typing import Any, Optional

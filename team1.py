@@ -1,6 +1,6 @@
 """
-// Copyright (c) William Newport
-// SPDX-License-Identifier: BUSL-1.1
+Copyright (c) 2025 DataSurface Inc. All Rights Reserved.
+Proprietary Software - See LICENSE.txt for terms.
 
 This is a starter datasurface repository. It defines a simple Ecosystem using YellowDataPlatform with Live and Forensic modes.
 It will generate 2 pipelines, one with live records only and the other with full milestoning.
@@ -118,7 +118,7 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
                 sinks=[
                     DatasetSink("Store1", "customers"),
                     DatasetSink("Store1", "addresses"),
-                    DatasetSink("MaskedCustomers", "customers")
+                    DatasetSink("MaskedCustomers", "customers"),
                 ],
                 platform_chooser=WorkspacePlatformConfig(
                     hist=ConsumerRetentionRequirements(
@@ -133,7 +133,7 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
                 sinks=[
                     DatasetSink("Store1", "customers"),
                     DatasetSink("Store1", "addresses"),
-                    DatasetSink("MaskedCustomers", "customers")
+                    DatasetSink("MaskedCustomers", "customers"),
                 ],
                 platform_chooser=WorkspacePlatformConfig(
                     hist=ConsumerRetentionRequirements(

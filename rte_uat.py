@@ -1,6 +1,6 @@
 """
-// Copyright (c) William Newport
-// SPDX-License-Identifier: BUSL-1.1
+Copyright (c) 2025 DataSurface Inc. All Rights Reserved.
+Proprietary Software - See LICENSE.txt for terms.
 
 This is a starter datasurface repository. It defines a simple Ecosystem using YellowDataPlatform with Live and Forensic modes. It
 ingests data from a single source, using a Workspace to produce a masked version of that data and provides consumer Workspaces

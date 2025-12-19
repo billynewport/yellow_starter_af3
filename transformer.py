@@ -1,5 +1,15 @@
+# Copyright (c) 2025 DataSurface Inc. All Rights Reserved.
+# Proprietary Software - See LICENSE.txt for terms.
+
+from typing import List
+
 from sqlalchemy import Connection, text
+
+from datasurface.md import Dataset, Datastore, DDLColumn, DDLTable, PlainTextDocumentation
+from datasurface.md import NullableStatus, PrimaryKeyStatus, VarChar, Date
+from datasurface.md.policy import SimpleDC, SimpleDCTypes
 from datasurface.platforms.yellow.transformer_context import DataTransformerContext
+from datasurface.md.containers import TestCaptureMetaData
 
 
 def get_database_type(conn: Connection) -> str:
@@ -43,7 +53,7 @@ def get_masked_field_sql(field_name: str, mask_pattern: str, db_type: str) -> st
             return f"CASE WHEN {quoted_field} IS NOT NULL THEN '***' + RIGHT({quoted_field}, 3) ELSE NULL END"
         elif mask_pattern == 'email':  # For email - complex masking
             return f"""CASE
-                WHEN {quoted_field} IS NOT NULL AND {quoted_field} LIKE '%@%' AND CHARINDEX('@', {quoted_field}) > 3
+                WHEN {quoted_field} IS NOT NULL AND {quoted_field} LIKE '%%@%%' AND CHARINDEX('@', {quoted_field}) > 3
                 THEN LEFT({quoted_field}, 3) + '***@' +
                      SUBSTRING({quoted_field}, CHARINDEX('@', {quoted_field}) + 1,
                                LEN({quoted_field}) - CHARINDEX('@', {quoted_field}))
@@ -59,13 +69,95 @@ def get_masked_field_sql(field_name: str, mask_pattern: str, db_type: str) -> st
             return f"CASE WHEN {quoted_field} IS NOT NULL THEN '***' || SUBSTRING({quoted_field}, LENGTH({quoted_field}) - 2) ELSE NULL END"
         elif mask_pattern == 'email':  # For email - complex masking
             return f"""CASE
-                WHEN {quoted_field} IS NOT NULL AND {quoted_field} LIKE '%@%'
+                WHEN {quoted_field} IS NOT NULL AND {quoted_field} LIKE '%%@%%'
                 THEN SUBSTRING({quoted_field}, 1, 3) || '***@' || SPLIT_PART({quoted_field}, '@', 2)
                 ELSE NULL
             END"""
 
     # Default fallback - should never reach here with valid inputs
     return f"CASE WHEN {quoted_field} IS NOT NULL THEN '***' ELSE NULL END"
+
+
+def defineInputDatasets() -> List[Datastore]:
+    """
+    Define input datasets required by this transformer.
+
+    Returns:
+        List of Datastores containing source datasets needed for transformation.
+        The framework uses these to validate the test ecosystem has the right inputs.
+    """
+    return [
+        Datastore(
+            "Store1",
+            documentation=PlainTextDocumentation("Test datastore"),
+            capture_metadata=TestCaptureMetaData(),
+            datasets=[
+                Dataset(
+                    "customers",
+                    schema=DDLTable(
+                        columns=[
+                            DDLColumn("id", VarChar(20), nullable=NullableStatus.NOT_NULLABLE, primary_key=PrimaryKeyStatus.PK),
+                            DDLColumn("firstname", VarChar(100), nullable=NullableStatus.NOT_NULLABLE),
+                            DDLColumn("lastname", VarChar(100), nullable=NullableStatus.NOT_NULLABLE),
+                            DDLColumn("dob", Date(), nullable=NullableStatus.NOT_NULLABLE),
+                            DDLColumn("email", VarChar(100)),
+                            DDLColumn("phone", VarChar(100)),
+                            DDLColumn("primaryaddressid", VarChar(20)),
+                            DDLColumn("billingaddressid", VarChar(20))
+                        ]
+                    ),
+                    classifications=[SimpleDC(SimpleDCTypes.CPI, "Customer")]
+                ),
+                Dataset(
+                    "addresses",
+                    schema=DDLTable(
+                        columns=[
+                            DDLColumn("id", VarChar(20), nullable=NullableStatus.NOT_NULLABLE, primary_key=PrimaryKeyStatus.PK),
+                            DDLColumn("customerid", VarChar(20), nullable=NullableStatus.NOT_NULLABLE),
+                            DDLColumn("streetname", VarChar(100), nullable=NullableStatus.NOT_NULLABLE),
+                            DDLColumn("city", VarChar(100), nullable=NullableStatus.NOT_NULLABLE),
+                            DDLColumn("state", VarChar(100), nullable=NullableStatus.NOT_NULLABLE),
+                            DDLColumn("zipcode", VarChar(30), nullable=NullableStatus.NOT_NULLABLE)
+                        ]
+                    ),
+                    classifications=[SimpleDC(SimpleDCTypes.CPI, "Address")]
+                )
+            ]
+        ),
+    ]
+
+
+def defineOutputDatastore() -> Datastore:
+    """
+    Define the output datastore produced by this transformer.
+
+    Returns:
+        Datastore object with output dataset schemas.
+        The framework uses this to create output tables in the test database.
+    """
+    return Datastore(
+        name="MaskedCustomers",
+        documentation=None,
+        datasets=[
+            Dataset(
+                "customers",
+                schema=DDLTable(
+                    columns=[
+                        DDLColumn("id", VarChar(20), nullable=NullableStatus.NOT_NULLABLE,
+                                  primary_key=PrimaryKeyStatus.PK),
+                        DDLColumn("firstname", VarChar(100), nullable=NullableStatus.NOT_NULLABLE),
+                        DDLColumn("lastname", VarChar(100), nullable=NullableStatus.NOT_NULLABLE),
+                        DDLColumn("dob", Date(), nullable=NullableStatus.NOT_NULLABLE),
+                        DDLColumn("email", VarChar(100)),
+                        DDLColumn("phone", VarChar(100)),
+                        DDLColumn("primaryaddressid", VarChar(20)),
+                        DDLColumn("billingaddressid", VarChar(20))
+                    ]
+                ),
+                classifications=[SimpleDC(SimpleDCTypes.PUB, "Customer")]
+            )
+        ]
+    )
 
 
 def executeTransformer(conn: Connection, context: DataTransformerContext) -> None:
