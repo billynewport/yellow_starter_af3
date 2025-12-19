@@ -119,6 +119,7 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
                     DatasetSink("Store1", "customers"),
                     DatasetSink("Store1", "addresses"),
                     DatasetSink("MaskedCustomers", "customers"),
+                    DatasetSink("DBTMaskedCustomers", "customers")
                 ],
                 platform_chooser=WorkspacePlatformConfig(
                     hist=ConsumerRetentionRequirements(
@@ -134,6 +135,7 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
                     DatasetSink("Store1", "customers"),
                     DatasetSink("Store1", "addresses"),
                     DatasetSink("MaskedCustomers", "customers"),
+                    DatasetSink("DBTMaskedCustomers", "customers")
                 ],
                 platform_chooser=WorkspacePlatformConfig(
                     hist=ConsumerRetentionRequirements(
@@ -184,6 +186,48 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
                     ]
                 )
             )
+        ),
+        Workspace(
+            "DBT_MaskedStoreGenerator",
+            DataPlatformManagedDataContainer("MaskedStoreGenerator with DBT container"),
+            DatasetGroup(
+                "Original",
+                sinks=[DatasetSink("Store1", "customers")]
+            ),
+            DataTransformer(
+                name="DBTMaskedCustomerGenerator",
+                code=PythonRepoCodeArtifact(
+                    VersionedRepository(
+                        GitHubRepository("datasurface/yellow_starter_dbt_maskcustomer", "main", credential=git),
+                        EnvRefReleaseSelector("custMaskRev")
+                    )
+                ),
+                runAsCredential=Credential("mask_dt_cred", CredentialType.USER_PASSWORD),
+                trigger=CronTrigger("Every 1 minute", "*/1 * * * *"),
+                store=Datastore(
+                    name="DBTMaskedCustomers",
+                    documentation=PlainTextDocumentation("MaskedCustomers with DBT datastore"),
+                    datasets=[
+                        Dataset(
+                            "customers",
+                            schema=DDLTable(
+                                columns=[
+                                    DDLColumn("id", VarChar(20), nullable=NullableStatus.NOT_NULLABLE, primary_key=PrimaryKeyStatus.PK),
+                                    DDLColumn("firstname", VarChar(100), nullable=NullableStatus.NOT_NULLABLE),
+                                    DDLColumn("lastname", VarChar(100), nullable=NullableStatus.NOT_NULLABLE),
+                                    DDLColumn("dob", Date(), nullable=NullableStatus.NOT_NULLABLE),
+                                    DDLColumn("email", VarChar(100)),
+                                    DDLColumn("phone", VarChar(100)),
+                                    DDLColumn("primaryaddressid", VarChar(20)),
+                                    DDLColumn("billingaddressid", VarChar(20))
+                                ]
+                            ),
+                            classifications=[SimpleDC(SimpleDCTypes.PUB, "Customer")]
+                        )
+                    ]
+                )
+            )
         )
     )
     return team
+
