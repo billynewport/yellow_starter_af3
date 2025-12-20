@@ -13,14 +13,14 @@ from datasurface.md import DataTransformerExecutionPlacement, LocationKey
 from datasurface.md.containers import HostPortPair
 from datasurface.md.credential import Credential, CredentialType
 from datasurface.md.documentation import PlainTextDocumentation
-from datasurface.md import StorageRequirement, ProductionStatus
+from datasurface.md import StorageRequirement, ProductionStatus, DeprecationStatus
 from datasurface.platforms.yellow import YellowDataPlatform, YellowPlatformServiceProvider, K8sResourceLimits
-from datasurface.md.governance import DataMilestoningStrategy
+from datasurface.md.governance import DataMilestoningStrategy, DeprecationInfo
 from datasurface.md import PostgresDatabase, ConsumerReplicaGroup, RuntimeEnvironment, Ecosystem, PSPDeclaration
 from datasurface.md.triggers import CronTrigger
 from datasurface.platforms.yellow.assembly import GitCacheConfig, YellowExternalAirflow3AndMergeDatabase
 from datasurface.md.containers import SQLServerDatabase
-from datasurface.platforms.yellow.yellow_dp import K8sDataTransformerHint
+from datasurface.platforms.yellow.yellow_dp import K8sDataTransformerHint, DataTransformerDockerImage
 from datasurface.md.repo import VersionPatternReleaseSelector, GitHubRepository, ReleaseType, VersionPatterns
 from datasurface.platforms.yellow.yellow_kafka_publisher import KafkaEventPublishConfig
 
@@ -148,6 +148,15 @@ def createPSP() -> YellowPlatformServiceProvider:
                     crgName="SQLServer",
                     dcName="SQLServer"
                 )
+            )
+        ],
+        dtDockerImages=[
+            DataTransformerDockerImage(
+                name="DBT_MaskCustomer_DT",
+                image="datasurface/datasurface",  # Has DBT code for now.
+                version="latest",
+                cmd="IGNORED FOR NOW",
+                deprecation_info=DeprecationInfo(status=DeprecationStatus.NOT_DEPRECATED)
             )
         ]
     )
