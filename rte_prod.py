@@ -71,12 +71,14 @@ def createPSP() -> YellowPlatformServiceProvider:
             YellowDataPlatform(
                 name="SCD1",
                 doc=PlainTextDocumentation("SCD1 Yellow DataPlatform"),
-                milestoneStrategy=DataMilestoningStrategy.SCD1
+                milestoneStrategy=DataMilestoningStrategy.SCD1,
+                stagingBatchesToKeep=5
                 ),
             YellowDataPlatform(
                 "SCD2",
                 doc=PlainTextDocumentation("SCD2 Yellow DataPlatform"),
-                milestoneStrategy=DataMilestoningStrategy.SCD2
+                milestoneStrategy=DataMilestoningStrategy.SCD2,
+                stagingBatchesToKeep=5
                 )
         ],
         consumerReplicaGroups=[
