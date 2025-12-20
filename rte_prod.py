@@ -154,7 +154,7 @@ def createPSP() -> YellowPlatformServiceProvider:
             DataTransformerDockerImage(
                 name="DBT_MaskCustomer_DT",
                 image="datasurface/datasurface",  # Has DBT code for now.
-                version="latest",
+                version="v0.5.17",
                 cmd="IGNORED FOR NOW",
                 deprecation_info=DeprecationInfo(status=DeprecationStatus.NOT_DEPRECATED)
             )
