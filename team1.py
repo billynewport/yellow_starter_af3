@@ -21,6 +21,7 @@ from datasurface.md.credential import CredentialType
 from datasurface.md.repo import GitHubRepository, VersionedRepository
 from datasurface.md.policy import SimpleDC, SimpleDCTypes
 from datasurface.md.codeartifact import PythonRepoCodeArtifact
+from datasurface.dt.dbt import DBTCodeArtifact
 from datasurface.md.repo import EnvRefReleaseSelector
 from datasurface.md.repo import VersionPatternReleaseSelector, VersionPatterns, ReleaseType
 
@@ -196,11 +197,12 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
             ),
             DataTransformer(
                 name="DBTMaskedCustomerGenerator",
-                code=PythonRepoCodeArtifact(
-                    VersionedRepository(
+                code=DBTCodeArtifact(
+                    repo=VersionedRepository(
                         GitHubRepository("datasurface/yellow_starter_dbt_maskcustomer", "main", credential=git),
                         EnvRefReleaseSelector("custMaskRev")
-                    )
+                    ),
+                    imageKey="DBT_MaskCustomer_DT"
                 ),
                 runAsCredential=Credential("mask_dt_cred", CredentialType.USER_PASSWORD),
                 trigger=CronTrigger("Every 1 minute", "*/1 * * * *"),
@@ -230,4 +232,3 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
         )
     )
     return team
-
