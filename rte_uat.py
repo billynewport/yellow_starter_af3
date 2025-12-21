@@ -15,12 +15,12 @@ from datasurface.md.credential import Credential, CredentialType
 from datasurface.md.documentation import PlainTextDocumentation
 from datasurface.md import StorageRequirement, ProductionStatus
 from datasurface.platforms.yellow import YellowDataPlatform, YellowPlatformServiceProvider, K8sResourceLimits
-from datasurface.md.governance import DataMilestoningStrategy
+from datasurface.md.governance import DataMilestoningStrategy, DeprecationInfo, DeprecationStatus
 from datasurface.md.triggers import CronTrigger
 from datasurface.md import PostgresDatabase, ConsumerReplicaGroup, RuntimeEnvironment, Ecosystem, PSPDeclaration
 from datasurface.platforms.yellow.assembly import GitCacheConfig, YellowExternalAirflow3AndMergeDatabase
 from datasurface.md.containers import SQLServerDatabase
-from datasurface.platforms.yellow.yellow_dp import K8sDataTransformerHint
+from datasurface.platforms.yellow.yellow_dp import K8sDataTransformerHint, DataTransformerDockerImage
 from datasurface.md.repo import VersionPatternReleaseSelector, GitHubRepository, ReleaseType, VersionPatterns
 
 # UAT environment configuration - separate namespace and databases from prod
@@ -125,6 +125,15 @@ def createPSP() -> YellowPlatformServiceProvider:
                     crgName="SQLServer",
                     dcName="SQLServer-uat"
                 )
+            )
+        ],
+        dtDockerImages=[
+            DataTransformerDockerImage(
+                name="DBT_MaskCustomer_DT",
+                image="datasurface/datasurface",  # Has DBT code for now.
+                version="v0.5.17",
+                cmd="IGNORED FOR NOW",
+                deprecation_info=DeprecationInfo(status=DeprecationStatus.NOT_DEPRECATED)
             )
         ]
     )
