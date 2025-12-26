@@ -2,9 +2,10 @@
 # Proprietary Software - See LICENSE.txt for terms.
 
 import unittest
-from datasurface.md import Ecosystem, ValidationTree, DataPlatform, EcosystemPipelineGraph, PlatformPipelineGraph
+from datasurface.dsl import Ecosystem, DataPlatform, EcosystemPipelineGraph, PlatformPipelineGraph
+from datasurface.validation import ValidationTree
+from datasurface.model import loadEcosystemFromEcoModule
 from typing import Any, Optional
-from datasurface.md.model_loader import loadEcosystemFromEcoModule
 
 
 class TestEcosystem(unittest.TestCase):

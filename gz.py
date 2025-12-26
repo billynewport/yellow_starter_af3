@@ -6,10 +6,9 @@ This is a starter datasurface repository. It defines a simple Ecosystem using Ye
 It will generate 2 pipelines, one with live records only and the other with full milestoning.
 """
 
-from datasurface.md import GovernanceZone, GovernanceZoneDeclaration
-from datasurface.md import Ecosystem
-from datasurface.md.credential import Credential
-from datasurface.md.repo import GitHubRepository
+from datasurface.dsl import GovernanceZone, GovernanceZoneDeclaration, Ecosystem
+from datasurface.security import Credential
+from datasurface.repos import GitHubRepository
 from team1 import createTeam
 
 GH_REPO_OWNER: str = "billynewport"  # Change to your github username

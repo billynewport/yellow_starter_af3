@@ -6,14 +6,12 @@ This is a starter datasurface repository. It defines a simple Ecosystem using Ye
 It will generate 2 pipelines, one with live records only and the other with full milestoning.
 """
 
-from datasurface.md import InfrastructureVendor, InfrastructureLocation
-from datasurface.md import Ecosystem
-from datasurface.md.credential import Credential, CredentialType
-from datasurface.md.documentation import PlainTextDocumentation
-from datasurface.md.repo import GitHubRepository
-from datasurface.md import CloudVendor, RuntimeDeclaration
-from datasurface.md import ValidationTree
-from datasurface.md.model_schema import addDatasurfaceModel
+from datasurface.dsl import InfrastructureVendor, InfrastructureLocation, Ecosystem, CloudVendor, RuntimeDeclaration
+from datasurface.security import Credential, CredentialType
+from datasurface.documentation import PlainTextDocumentation
+from datasurface.repos import GitHubRepository
+from datasurface.validation import ValidationTree
+from datasurface.model import addDatasurfaceModel
 from gz import createGZ
 from rte_prod import createProdRTE
 from rte_uat import createUATRTE

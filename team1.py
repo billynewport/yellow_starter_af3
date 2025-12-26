@@ -6,24 +6,24 @@ This is a starter datasurface repository. It defines a simple Ecosystem using Ye
 It will generate 2 pipelines, one with live records only and the other with full milestoning.
 """
 
-from datasurface.md import (
-    Team, GovernanceZone, DataTransformer, Ecosystem, LocationKey, Credential,
-    PlainTextDocumentation, WorkspacePlatformConfig, Datastore, Dataset,
-    IngestionConsistencyType, ConsumerRetentionRequirements, DataMilestoningStrategy, DataLatency, DDLTable, DDLColumn, NullableStatus,
-    PrimaryKeyStatus, VarChar, Date, Workspace, DatasetSink, DatasetGroup, PostgresDatabase, TeamDeclaration,
+from datasurface.dsl import (
+    Team, GovernanceZone, DataTransformer, Ecosystem,
+    WorkspacePlatformConfig, Datastore, Dataset, Workspace, DatasetGroup, DatasetSink,
+    IngestionConsistencyType, ConsumerRetentionRequirements, DataMilestoningStrategy, DataLatency, TeamDeclaration,
     EnvironmentMap, EnvRefDataContainer, ProductionStatus, DataPlatformManagedDataContainer
 )
-from datasurface.md.triggers import CronTrigger
-from datasurface.md.containers import (
-    SQLSnapshotIngestion, HostPortPair
-)
-from datasurface.md.credential import CredentialType
-from datasurface.md.repo import GitHubRepository, VersionedRepository
-from datasurface.md.policy import SimpleDC, SimpleDCTypes
-from datasurface.md.codeartifact import PythonRepoCodeArtifact
+from datasurface.keys import LocationKey
+from datasurface.schema import DDLTable, DDLColumn, NullableStatus, PrimaryKeyStatus
+from datasurface.types import VarChar, Date
+from datasurface.triggers import CronTrigger
+from datasurface.containers import SQLSnapshotIngestion, HostPortPair, PostgresDatabase
+from datasurface.security import Credential, CredentialType
+from datasurface.documentation import PlainTextDocumentation
+from datasurface.repos import GitHubRepository, VersionedRepository, EnvRefReleaseSelector, VersionPatternReleaseSelector, \
+    VersionPatterns, ReleaseType
+from datasurface.policy import SimpleDC, SimpleDCTypes
+from datasurface.codeartifact import PythonRepoCodeArtifact
 from datasurface.dt.dbt import DBTCodeArtifact
-from datasurface.md.repo import EnvRefReleaseSelector
-from datasurface.md.repo import VersionPatternReleaseSelector, VersionPatterns, ReleaseType
 
 GH_REPO_OWNER: str = "billynewport"  # Change to your github username
 GH_REPO_NAME: str = "yellow_starter_af3"  # Change to your github repository name containing this project

@@ -9,19 +9,18 @@ to that data in Postgres, SQLServer, Oracle and DB2 using CQRS.
 It will generate 2 pipelines, one with live records only (SCD1) and the other with full milestoning (SCD2).
 """
 
-from datasurface.md import DataTransformerExecutionPlacement, LocationKey
-from datasurface.md.containers import HostPortPair
-from datasurface.md.credential import Credential, CredentialType
-from datasurface.md.documentation import PlainTextDocumentation
-from datasurface.md import StorageRequirement, ProductionStatus, DeprecationStatus
+from datasurface.dsl import DataTransformerExecutionPlacement, StorageRequirement, ProductionStatus, \
+    DeprecationStatus, ConsumerReplicaGroup, RuntimeEnvironment, Ecosystem, PSPDeclaration, \
+    DataMilestoningStrategy, DeprecationInfo
+from datasurface.keys import LocationKey
+from datasurface.containers import HostPortPair, SQLServerDatabase, PostgresDatabase
+from datasurface.security import Credential, CredentialType
+from datasurface.documentation import PlainTextDocumentation
 from datasurface.platforms.yellow import YellowDataPlatform, YellowPlatformServiceProvider, K8sResourceLimits
-from datasurface.md.governance import DataMilestoningStrategy, DeprecationInfo
-from datasurface.md import PostgresDatabase, ConsumerReplicaGroup, RuntimeEnvironment, Ecosystem, PSPDeclaration
-from datasurface.md.triggers import CronTrigger
+from datasurface.triggers import CronTrigger
 from datasurface.platforms.yellow.assembly import GitCacheConfig, YellowExternalAirflow3AndMergeDatabase
-from datasurface.md.containers import SQLServerDatabase
 from datasurface.platforms.yellow.yellow_dp import K8sDataTransformerHint, DataTransformerDockerImage
-from datasurface.md.repo import VersionPatternReleaseSelector, GitHubRepository, ReleaseType, VersionPatterns
+from datasurface.repos import VersionPatternReleaseSelector, GitHubRepository, ReleaseType, VersionPatterns
 from datasurface.platforms.yellow.yellow_kafka_publisher import KafkaEventPublishConfig
 
 # Production environment configuration - matches kub-test Airflow 3.x setup

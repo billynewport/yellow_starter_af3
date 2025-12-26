@@ -5,11 +5,13 @@ from typing import List
 
 from sqlalchemy import Connection, text
 
-from datasurface.md import Dataset, Datastore, DDLColumn, DDLTable, PlainTextDocumentation
-from datasurface.md import NullableStatus, PrimaryKeyStatus, VarChar, Date
-from datasurface.md.policy import SimpleDC, SimpleDCTypes
+from datasurface.dsl import Dataset, Datastore
+from datasurface.schema import DDLColumn, DDLTable, NullableStatus, PrimaryKeyStatus
+from datasurface.types import VarChar, Date
+from datasurface.policy import SimpleDC, SimpleDCTypes
+from datasurface.documentation import PlainTextDocumentation
 from datasurface.platforms.yellow.transformer_context import DataTransformerContext
-from datasurface.md.containers import TestCaptureMetaData
+from datasurface.containers import TestCaptureMetaData
 
 
 def get_database_type(conn: Connection) -> str:
