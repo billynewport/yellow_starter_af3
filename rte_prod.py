@@ -66,6 +66,9 @@ def createPSP() -> YellowPlatformServiceProvider:
         merge_datacontainer=k8s_merge_datacontainer,
         pv_storage_class="longhorn",
         datasurfaceDockerImage="datasurface/datasurface:v0.7.0",
+        otlpEnabled=True,
+        otlpPort=4317,
+        otlpProtocol="http/protobuf",
         dataPlatforms=[
             YellowDataPlatform(
                 name="SCD1",
