@@ -67,7 +67,7 @@ def createPSP() -> YellowPlatformServiceProvider:
         pv_storage_class="longhorn",
         datasurfaceDockerImage="datasurface/datasurface:v0.7.0",
         otlpEnabled=True,
-        otlpPort=4317,
+        otlpPort=4318,
         otlpProtocol="http/protobuf",
         dataPlatforms=[
             YellowDataPlatform(
