@@ -66,6 +66,8 @@ def createPSP() -> YellowPlatformServiceProvider:
         merge_datacontainer=k8s_merge_datacontainer,
         pv_storage_class="longhorn",
         datasurfaceDockerImage="datasurface/datasurface:v0.7.0",
+        otlpEndpoint="http://datadog-agent.default.svc.cluster.local:4318/",
+        otlpProtocol="http/protobuf",
         dataPlatforms=[
             YellowDataPlatform(
                 name="SCD1",
