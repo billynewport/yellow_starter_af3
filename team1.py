@@ -36,6 +36,10 @@ def createTeam(ecosys: Ecosystem, git: Credential) -> Team:
         "team1",
         GitHubRepository(f"{GH_REPO_OWNER}/{GH_REPO_NAME}", "team1_edit", credential=ecosys.owningRepo.credential)
         ))
+    gz.add(TeamDeclaration(
+        "teamWed",
+        GitHubRepository(f"{GH_REPO_OWNER}/{GH_REPO_NAME}", "teamWed_edit", credential=ecosys.owningRepo.credential)
+        ))
 
     team: Team = gz.getTeamOrThrow("team1")
     team.add(EnvironmentMap(

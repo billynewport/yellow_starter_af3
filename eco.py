@@ -10,7 +10,6 @@ from datasurface.dsl import InfrastructureVendor, InfrastructureLocation, Ecosys
 from datasurface.security import Credential, CredentialType
 from datasurface.documentation import PlainTextDocumentation
 from datasurface.repos import GitHubRepository
-from datasurface.validation import ValidationTree
 from datasurface.model import addDatasurfaceModel
 from gz import createGZ
 from rte_prod import createProdRTE
@@ -25,7 +24,7 @@ def createEcosystem() -> Ecosystem:
     """This is a very simple test model with a single datastore and dataset.
     It is used to test the YellowDataPlatform. We are using a monorepo approach
     so all the model fragments use the same owning repository.
-    
+
     Updated ecosystem documentation for testing workflow.
     """
 
@@ -65,6 +64,4 @@ def createEcosystem() -> Ecosystem:
 
     # Add the governance zone and associated teamsto the ecosystem.
     createGZ(ecosys, git)
-
-    _: ValidationTree = ecosys.lintAndHydrateCaches()
     return ecosys
